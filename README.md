@@ -1,5 +1,5 @@
 # vanilla-markov
-A vanilla markov chain text generator in just 16+2 lines of Python.
+A vanilla markov chain text generator in just 16+2+2 = 20 lines of Python. 
 
 ## Running the project
 
@@ -34,8 +34,7 @@ This one is quite funny:
     1,2,3 1,2,3 drink
 
     throw
-  
-
+ 
 ## Author
 Nicolás Martín Obesio, a computer science student at the University of Buenos Aires.
 
