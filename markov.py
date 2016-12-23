@@ -1,22 +1,25 @@
-import random
+import random, re
 
 with open("corpus.txt") as file:
-    text = file.read()
+    text = file.read().replace('\n', ' newline ')
 
-text = [word.lower() for word in text.split(' ') if word != '']
+text = re.sub(r'([\,\.\!\?\;\:])',r' \1 ',text)
+text = re.sub(r'[^a-zA-Z0-9|\,|\.|\!|\?|\;|\:|\'|\’]',' ',text)
+
+text = [word.lower().strip() for word in text.split(' ') if word.strip() != '']
 
 markov_chain = {}
-for current_word, next_word in zip(text, text[1:]):
-    markov_chain.setdefault(current_word, []).append(next_word)
+for previous_word, current_word, next_word  in zip(text, text[1:], text[2:]):
+    markov_chain.setdefault((previous_word, current_word), []).append(next_word)
 
-current_word = random.choice(list(markov_chain.keys()))
-sentence = []
+previous_word, current_word = random.choice(list(markov_chain.keys()))
+sentence = [previous_word]
 
-for i in range(0,15):
+for i in range(0,20):
     sentence.append(current_word)
-    if current_word in markov_chain and len(markov_chain[current_word]) > 0:
-        current_word = random.choice(markov_chain[current_word])
+    if (previous_word, current_word) in markov_chain and len(markov_chain[(previous_word, current_word)]) > 0:
+        previous_word, current_word = current_word, random.choice(markov_chain[(previous_word, current_word)])
     else:
         break
 
-print(' '.join(sentence))
+print(' '.join(sentence).replace('newline', '\n').replace('\n ', '\n'))
