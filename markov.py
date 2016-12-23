@@ -1,12 +1,12 @@
 import random, re
 
-with open("corpus.txt") as file:
-    text = file.read().replace('\n', ' newline ')
+text = []
 
-text = re.sub(r'([\,\.\!\?\;\:])',r' \1 ',text)
-text = re.sub(r'[^a-zA-Z0-9|\,|\.|\!|\?|\;|\:|\'|\’]',' ',text)
-
-text = [word.lower().strip() for word in text.split(' ') if word.strip() != '']
+with open('corpus.txt') as fh:
+    for line in fh:
+        line = re.sub(r'([\,\.\!\?\;\:])', r' \1 ', line)
+        line = re.sub(r'[^a-zA-Z0-9|\,|\.|\!|\?|\;|\:|\'|\’]', ' ', line)
+        text += [word.lower().strip() for word in line.split() if word.strip() != ''] + ['\n']
 
 markov_chain = {}
 for previous_word, current_word, next_word  in zip(text, text[1:], text[2:]):
@@ -22,4 +22,4 @@ for i in range(0,20):
     else:
         break
 
-print(' '.join(sentence).replace('newline', '\n').replace('\n ', '\n'))
+print(' '.join(sentence).replace('\n ', '\n'))
