@@ -3,7 +3,7 @@ import re
 
 text = []
 
-# Tokenization of text
+# We tokenize the corpus.
 with open('corpus.txt') as fh:
     for line in fh:
         # We add a spaces between this characters so they are treated as words
@@ -15,7 +15,7 @@ with open('corpus.txt') as fh:
 markov_chain = {}
 
 # We build the markov chain using bigrams as keys.
-# Using bigrams intead of a single word gives more coherents texts.
+# Using bigrams instead of a single word gives more coherent texts.
 for previous_word, current_word, next_word in zip(text, text[1:], text[2:]):
     markov_chain.setdefault((previous_word, current_word), []).append(next_word)
 
