@@ -1,5 +1,5 @@
 # vanilla-markov
-A vanilla markov chain text generator in just 16 lines of Python.
+A vanilla markov chain text generator in just 16+2 lines of Python.
 
 ## Running the project
 
